@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8" /><title>Monopoly Dice API Test</title></head>
+  <body>
+    <h1>Monopoly Dice API Test (NOT the Dice Roller UI)</h1>
+    <button id="health">/api/health</button>
+    <button id="roll">/api/monopoly/roll</button>
+    <button id="nocors">/api/nocors</button>
+    <pre id="out"></pre>
+
+    <script>
+      const out = document.getElementById("out");
+      const show = (x) => (out.textContent = JSON.stringify(x, null, 2));
+      async function go(path) {
+        const r = await fetch(path);
+        const data = await r.json();
+        show(data);
+      }
+      document.getElementById("health").onclick = () => go("/api/health");
+      document.getElementById("roll").onclick = () => go("/api/monopoly/roll");
+      document.getElementById("nocors").onclick = () => go("/api/nocors");
+    </script>
+  </body>
+</html>
