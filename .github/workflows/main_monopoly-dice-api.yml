@@ -48,12 +48,12 @@ jobs:
         with:
           name: node-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_43066383DEBA42698107672197BA7D4A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_870A4C6972FF4688AA3592A78825DD94 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_49875AB6BA3B4DF8AC0DE206310D8705 }}
+          app-name: monopoly-dice-api
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -62,4 +62,5 @@ jobs:
           app-name: 'monopoly-dice-api'
           slot-name: 'Production'
           package: .
+
           
