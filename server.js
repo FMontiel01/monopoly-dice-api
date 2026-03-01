@@ -9,6 +9,15 @@ const PORT = process.env.PORT || 3000;
 
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "http://localhost:5500";
 
+// INTENTIONAL CORS FAIL ENDPOINT (no CORS headers)
+// We'll avoid the cors middleware by making a separate mini-app route:
+app.get("/api/nocors", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify({ ok: true, message: "This endpoint intentionally has no CORS." }));
+});
+
+app.listen(PORT, () => console.log(`API running on port ${PORT}`));
+
 // Allow CORS only for your static site
 app.use(
   cors({
@@ -36,12 +45,3 @@ app.get("/api/monopoly/roll", (req, res) => {
 
   res.json({ die1, die2, sum, isDouble, time: new Date().toISOString() });
 });
-
-// INTENTIONAL CORS FAIL ENDPOINT (no CORS headers)
-// We'll avoid the cors middleware by making a separate mini-app route:
-app.get("/api/nocors", (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify({ ok: true, message: "This endpoint intentionally has no CORS." }));
-});
-
-app.listen(PORT, () => console.log(`API running on port ${PORT}`));
